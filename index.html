@@ -23,9 +23,13 @@ html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
 body{font-family:var(--body);background:var(--white);color:var(--ink);overflow-x:hidden;line-height:1.6}
 .skip{position:absolute;top:-999px;left:1rem;z-index:9999;background:var(--g1);color:#fff;padding:.5rem 1rem;font-family:var(--body);font-size:.85rem;border-radius:var(--r4)}.skip:focus{top:1rem}
 /* NAV */
-.nav{background:var(--white);border-bottom:1px solid var(--border);padding:0 2.5rem;display:flex;align-items:center;justify-content:space-between;height:68px;position:sticky;top:0;z-index:100;box-shadow:0 1px 0 var(--border),0 4px 16px rgba(0,193,106,.04)}
+.nav{background:var(--white);border-bottom:1px solid var(--border);padding:0 2.5rem;display:flex;align-items:center;justify-content:space-between;height:80px;position:sticky;top:0;z-index:100;box-shadow:0 1px 0 var(--border),0 4px 16px rgba(0,193,106,.04);transition:all .3s ease-in-out;}
+.nav.sticky-nav{height:60px;box-shadow:var(--shadow-m);border-bottom:none;}
+.nav.sticky-nav .logo-mark{width:40px;height:40px;}
+.nav.sticky-nav .logo-mark img{height:40px;}
+.nav.sticky-nav .logo-text{font-size:.9rem;}
 .nav-logo{display:flex;align-items:center;gap:.75rem;text-decoration:none}
-.logo-mark{width:36px;height:36px;flex-shrink:0;overflow:hidden;}
+.logo-mark{width:50px;height:50px;flex-shrink:0;overflow:hidden;}
 .logo-text{font-family:var(--display);font-weight:700;font-size:1.1rem;color:var(--ink);line-height:1}
 .logo-text span{color:var(--g1)}
 .logo-sub{font-family:var(--body);font-size:.68rem;color:var(--muted);margin-top:1px;letter-spacing:.04em}
@@ -261,9 +265,9 @@ body{font-family:var(--body);background:var(--white);color:var(--ink);overflow-x
 <nav class="nav" aria-label="Navigation principale">
   <a href="#" class="nav-logo" aria-label="PARAR Consulting">
     <div class="logo-mark" aria-hidden="true">
-      <img src="logo.png" alt="PARAR Consulting Logo" style="height:36px; width:auto; border-radius:var(--r8);">
+      <img src="logo.png" alt="PARAR Consulting Logo" style="height:50px; width:auto; border-radius:var(--r8);">
     </div>
-    <div><div class="logo-text">PARAR<span>.</span>Consulting</div></div>
+
   </a>
   <ul class="nav-links" role="list">
     <li><a href="#expertise">Expertises</a></li>
@@ -496,6 +500,15 @@ document.getElementById('contactForm').addEventListener('submit',e=>{e.preventDe
 </script>
 <script>
     document.addEventListener('DOMContentLoaded', function() {
+        const nav = document.querySelector('.nav');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 100) { // Adjust scroll threshold as needed
+                nav.classList.add('sticky-nav');
+            } else {
+                nav.classList.remove('sticky-nav');
+            }
+        });
+
         const observer = new IntersectionObserver(entries => {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
